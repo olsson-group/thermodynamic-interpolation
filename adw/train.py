@@ -106,6 +106,6 @@ def main(config):
 
 
 if __name__ == "__main__":
-    config = utils.load_config("adw/config", "settings.json")  # edit config file to edit run settings
+    config = utils.load_config("adw/config", "settings.json")  # edit config file to edit run
     main(config)
  
