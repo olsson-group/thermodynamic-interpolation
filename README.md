@@ -1,1 +1,1 @@
-# thermodynamic-interpolation
+# Thermodynamic Interpolation
