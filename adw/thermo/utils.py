@@ -83,7 +83,7 @@ def add_to_json(json_path, data):
     f.close()
 
 
-class BoltzmannDensity:
+'''class BoltzmannDensity:
     def __init__(self, beta: float, a: float=4, b:float=0.5) -> None:
         """
         Boltzmann density for asymmetric double well potential
@@ -130,5 +130,5 @@ class BoltzmannDensity:
         :param x: position
         :return: log probability density
         """
-        return np.log(self.get_p(x))
+        return np.log(self.get_p(x))'''
 
