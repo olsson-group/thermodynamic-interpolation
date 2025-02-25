@@ -170,7 +170,7 @@ class MDQM9SamplerDataset(data.Dataset):
         return batch
 
 
-def get_latent_mdqm9_trajs(n_samples, T, scale: bool, traj_filename="00031.npy", traj_path: str="/mimer/NOBACKUP/groups/naiss2024-22-33/bg_results") -> np.array:
+def get_latent_mdqm9_trajs(n_samples, T, scale: bool, traj_filename="00031.npy", traj_path: str="") -> np.array:
     assert traj_filename in {"00031.npy", "10506.npy"}
     traj_index = traj_filename.split(".")
     traj_index.pop()
