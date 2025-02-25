@@ -112,13 +112,18 @@ class MDQM9SamplerDataset(data.Dataset):
     """
     
     def __init__(self, traj_filename: str, sdf_filename: str, traj_path: str, sdf_path: str, split: str='test', 
-                 T0: int=300, T1: int=400, scale: bool=False, cutoff: float=np.inf, use_latent_trajs: bool=False, n_latent_samples: int=10_000) -> None:
+                 T0: int=300, T1: int=400, scale: bool=False, cutoff: float=np.inf, use_latent_trajs: bool=False, 
+                 n_latent_samples: int=10_000, latent_traj_path="") -> None:
 
         assert split in {'train', 'val', 'test'}
+
+        if use_latent_trajs:
+            assert latent_traj_path != "", "latent_traj_path must be provided if use_latent_trajs is True"
+
         self.split = split
 
         if use_latent_trajs:
-            self.data0, self.data, self.dlogp0 = get_latent_mdqm9_trajs(n_latent_samples, T0, scale=scale, traj_filename=traj_filename)
+            self.data0, self.data, self.dlogp0 = get_latent_mdqm9_trajs(n_latent_samples, T0, scale=scale, traj_filename=traj_filename, traj_path=latent_traj_path)
         else:
             # Note: temperature is in [300, 400, 500, 600, 700, 800, 900, 1000]
             self.temp_index_dict = dict(zip(np.arange(300, 1001, step=100), list(range(8))))   # map temperature to index
@@ -156,7 +161,7 @@ class MDQM9SamplerDataset(data.Dataset):
         x = x - torch.mean(x, dim=0)    # remove center of mass to keep translation equivariance
         z = z - torch.mean(z, dim=0)
 
-        datalist = [torch_geometric.data.Data(bg_z=z, bg_dlogp=dlogp0, x=x, x0=x, T0=T0, T1=T1, atoms=self.atom_numbers, bond_index=self.bond_index, bonds=self.bonds)]
+        datalist = [torch_geometric.data.Data(latent_z=z, latent_dlogp=dlogp0, x=x, x0=x, T0=T0, T1=T1, atoms=self.atom_numbers, bond_index=self.bond_index, bonds=self.bonds)]
         batch = torch_geometric.data.Batch.from_data_list(datalist)
 
         batch = self.add_radius_graph(batch)

@@ -41,7 +41,8 @@ def sample(config: argparse.Namespace, b: torch.nn.Module) -> None:
         cutoff=config.cutoff,
         use_latent_trajs=False,
         n_latent_samples=0,
-    )
+        latent_traj_path="",  # change here if you want to use latent trajectories
+    ) 
 
     test_loader = DataLoader(
         dataset=test_dataset, 
@@ -72,8 +73,8 @@ def sample(config: argparse.Namespace, b: torch.nn.Module) -> None:
     for i, batch in enumerate(test_loader):
         batch = batch.to(device)
 
-        latent_noise = batch.bg_z.detach().cpu().numpy()
-        latent_dlogp = batch.bg_dlogp.detach().cpu().numpy()
+        latent_noise = batch.latent_z.detach().cpu().numpy()
+        latent_dlogp = batch.latent_dlogp.detach().cpu().numpy()
 
         batch_idx = batch.batch.detach().cpu().numpy()
         latent_noise = np.array([latent_noise[batch_idx == i] for i in range(batch_idx.max() + 1)])
