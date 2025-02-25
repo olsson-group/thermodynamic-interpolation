@@ -103,7 +103,8 @@ def trainer(config: argparse.Namespace) -> None:
         else:
             print(f"Epoch {epoch+1}/{config.n_epochs} - Train Loss: {epoch_train_loss:.4f} - Last Train Loss: {last_train_loss:.4f}")
 
-        torch.save(model, os.path.join(config.model_save_path, config.model_save_name, f"{config.model_save_name}_{epoch}.pt"))
+        # torch.save(model, os.path.join(config.model_save_path, config.model_save_name, f"{config.model_save_name}_{epoch}.pt"))
+        torch.save(model.state_dict(), os.path.join(config.model_save_path, config.model_save_name, f"{config.model_save_name}_{epoch}.pt"))
         
     if config.use_wandb:
         wandb.finish()
