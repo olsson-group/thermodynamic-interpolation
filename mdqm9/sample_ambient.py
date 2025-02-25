@@ -39,8 +39,8 @@ def sample(config: argparse.Namespace, b: torch.nn.Module) -> None:
         T1=config.sampling_T1,
         scale=config.scale_trajs,
         cutoff=config.cutoff,
-        use_latent_trajs=False,
-        n_latent_samples=0,
+        use_latent_trajs=False,  # change here if you want to use latent trajectories
+        n_latent_samples=0,  # change here if you want to use latent trajectories
         latent_traj_path="",  # change here if you want to use latent trajectories
     ) 
 
