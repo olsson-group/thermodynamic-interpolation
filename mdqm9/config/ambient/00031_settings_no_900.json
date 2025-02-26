@@ -19,7 +19,7 @@
     "n_epochs": 150,
     "model_save_path": "/mimer/NOBACKUP/groups/naiss2024-22-33/selma",
     "model_save_name": "00031_no_900",
-    "data_save_path": "generated_data",
+    "data_save_path": "generated_data/ambient",
     "traj_path":"../data/mols/rotated_replica_exchange_trajs/",
     "sdf_path": "../data/mols/",
     "model_epoch": "best63",

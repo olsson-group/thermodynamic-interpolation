@@ -19,7 +19,7 @@
     "n_epochs": 150,
     "model_save_path": "../models/mdqm9",
     "model_save_name": "00031_no_300",
-    "data_save_path": "generated_data",
+    "data_save_path": "generated_data/ambient",
     "traj_path":"../data/mols/rotated_replica_exchange_trajs/",
     "sdf_path": "../data/mols/",
     "model_epoch": "best63",

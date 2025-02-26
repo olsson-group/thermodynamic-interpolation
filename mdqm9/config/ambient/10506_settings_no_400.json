@@ -19,7 +19,7 @@
     "n_epochs": 150,
     "model_save_path": "/mimer/NOBACKUP/groups/naiss2024-22-33/selma/final_models/",
     "model_save_name": "10506_no_400",
-    "data_save_path": "/mimer/NOBACKUP/groups/naiss2024-22-33/selma/md_ti",
+    "data_save_path": "generated_data/ambient",
     "traj_path":"../data/mols/rotated_replica_exchange_trajs/",
     "sdf_path": "../data/mols/",
     "model_epoch": "best95",
