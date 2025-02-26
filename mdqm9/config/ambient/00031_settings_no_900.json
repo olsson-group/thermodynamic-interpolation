@@ -23,7 +23,7 @@
     "traj_path":"../data/mols/rotated_replica_exchange_trajs/",
     "sdf_path": "../data/mols/",
     "model_epoch": "best63",
-    "data_save_name": "00031_no_900_900to900K",
+    "data_save_name": "00031_no_900_1000to900K",
     "project_name": "TI (mol id. 00031)",
     "scale_trajs": 1,
     "return_dlogp": 1,
