@@ -20,7 +20,7 @@ Contains energy_evaluation for mdqm9 dataset. Adapted from:
 https://github.com/olsson-group/sma-md/blob/main/analysis/energy_solvent.py
 
 NOTE: Due to package incompabilities, this file needs to be run using a separate environment. 
-To install the required dependencies, make a clean conda environment from the file "ti_energy_env.yml"
+To install the required dependencies, make a new conda environment from the file "ti_energy_env.yml"
 
 """
 
