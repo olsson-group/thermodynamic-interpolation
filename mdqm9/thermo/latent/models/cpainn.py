@@ -23,7 +23,6 @@ class cPaiNN(device.Module):
     def __init__(
         self,
         n_features: int=32,
-        embedding_layers: int=2,
         score_layers: int=5,
         n_types=25,
         time_length=10,
@@ -34,7 +33,6 @@ class cPaiNN(device.Module):
 
         ### Args:
             - `n_features (int, optional)`: number of features. Defaults to 32.
-            - `embedding_layers (int, optional)`: number of embedding layers. Defaults to 2.
             - `score_layers (int, optional)`: number of score layers. Defaults to 5.
             - `n_types (int, optional)`: number of "atom" types. Defaults to 25.
             - `time_length (int, optional)`: length of time embedding. Defaults to 10.
@@ -42,7 +40,39 @@ class cPaiNN(device.Module):
 
         super().__init__()
 
-        self.net = torch.nn.Sequential(
+        if len(temperatures) > 1:
+            layers = [
+                graph.AddSpatialFeatures(),
+                graph.AddEquivariantFeatures(n_features),
+                embedding.NominalEmbedding("edge_type", n_features, n_types=4, feature_type="edge"),
+                embedding.NominalEmbedding("atom_number", n_features, n_types=n_types),
+                embedding.TemperatureEmbedding(feature_name="T", 
+                                           temperatures=temperatures, 
+                                           n_features=n_features, 
+                                           max_length=temp_length),
+                embedding.PositionalEmbedding("t", n_features, length=time_length),
+                embedding.CombineInvariantFeatures(3*n_features, n_features),
+                PaiNNBase(
+                    n_features=n_features,
+                    n_layers=score_layers,
+                ),
+            ]
+        else:
+            layers = [
+                graph.AddSpatialFeatures(),
+                graph.AddEquivariantFeatures(n_features),
+                embedding.NominalEmbedding("edge_type", n_features, n_types=4, feature_type="edge"),
+                embedding.NominalEmbedding("atom_number", n_features, n_types=n_types),
+                embedding.PositionalEmbedding("t", n_features, length=time_length),
+                embedding.CombineInvariantFeatures(2*n_features, n_features),
+                PaiNNBase(
+                    n_features=n_features,
+                    n_layers=score_layers,
+                ),
+            ]
+        
+
+        """self.net = torch.nn.Sequential(
             graph.AddSpatialFeatures(),
             graph.AddEquivariantFeatures(n_features),
             embedding.NominalEmbedding("edge_type", n_features, n_types=4, feature_type="edge"),
@@ -57,7 +87,9 @@ class cPaiNN(device.Module):
                 n_features=n_features,
                 n_layers=score_layers,
             ),
-        )
+        )"""
+
+        self.net = torch.nn.Sequential(*layers)
 
 
     def forward(self, batch: torch_geometric.data.Batch) -> torch_geometric.data.Batch:
