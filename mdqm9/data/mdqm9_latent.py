@@ -49,7 +49,6 @@ class MDQM9MultiTempDataset(data.Dataset):
         self.temp_index_dict = dict(zip(np.arange(300, 1001, step=100), list(range(8))))   # map temperature to index
         self.data = [get_mdqm9_trajs(self.temp_index_dict[T], traj_filename, traj_path, scale, split=split) for T in Ts]
         self.Ts = np.array([T for T in Ts for _ in range(len(self.data[0]))])
-        print(self.Ts.shape)
         self.data = np.concatenate(self.data, axis=0)
 
         self.atom_numbers = get_mdqm9_atom_numbers(traj_path, sdf_path, traj_filename, sdf_filename, distinguish=False, split=split)
@@ -113,12 +112,13 @@ class MDQM9MultiTempDataset(data.Dataset):
         batch = self.coalesce(batch)
         return batch
 
+
 class SamplerDataset(data.Dataset):
     """## Sampler dataset for bg generation.
     """
 
     def __init__(self, traj_filename: str, sdf_filename: str, traj_path: str, sdf_path: str, split: str, 
-                 Ts: list[300, 400, 500], n_samples: int, scale: bool=False, cutoff: float=np.inf, seed=0, align=True) -> None:
+                 T: 300, n_samples: int, scale: bool=False, cutoff: float=np.inf, seed=0, align=True) -> None:
         
         """Initialize the dataset.
 
@@ -132,6 +132,7 @@ class SamplerDataset(data.Dataset):
             scale (bool): Whether to scale the data.
             cutoff (float): Cutoff distance for the neighbor list.
         """
+
         torch.manual_seed(seed)
         np.random.seed(seed)
 
@@ -142,7 +143,7 @@ class SamplerDataset(data.Dataset):
         # Note: temperature is in [300, 400, 500, 600, 700, 800, 900, 1000]
         self.temp_index_dict = dict(zip(np.arange(300, 1001, step=100), list(range(8))))   # map temperature to index
 
-        self.T = Ts[0]
+        self.T = T
         self.data = [get_mdqm9_trajs(self.temp_index_dict[self.T], traj_filename, traj_path, scale, split=split)]
         self.data = np.concatenate(self.data, axis=0)
         self.x1 = torch.tensor(self.data[0], dtype=torch.float32).squeeze()
@@ -193,13 +194,7 @@ class SamplerDataset(data.Dataset):
         ### Returns:
             - `torch_geometric.data.Batch`: processed data.
         """
-        print(x0.mean())
         x0 = x0 - torch.mean(x0, axis=0)
-        print(x0.mean())
-
-        # if self.align:
-        #     r = Rotation.align_vectors(a=x1.numpy(), b=x0.numpy(), weights=None)[0]  # create rotation of x0 to x1:s reference frame
-        #     x0 = torch.tensor(r.apply(x0.numpy()), dtype=torch.float32)
 
         datalist = [torch_geometric.data.Data(x=torch.zeros_like(x0), x0=x0, x1=self.x1, T=T, atom_number=self.atom_order, bond_index=self.bond_index, bonds=self.bonds)]
         batch = torch_geometric.data.Batch.from_data_list(datalist)
@@ -298,43 +293,3 @@ def get_bond_index_and_bonds(traj_filename: str, sdf_path: str, sdf_filename: st
 
     bonds = torch.cat((bonds, bonds))
     return bond_index, bonds
-
-
-
-if __name__ == "__main__":
-    config = utils.load_config("paper/bg_thermo", "settings.json")
-    # dataset = MDQM9MultiTempDataset(traj_filename=config.mdqm9_traj_filename, 
-    #                        sdf_filename="mdqm9.sdf", 
-    #                        traj_path="molecular_interpolants/replica_exchange_trajs/rotated_replica_exchange_trajs/", 
-    #                        sdf_path="molecular_interpolants/replica_exchange_trajs/", 
-    #                        split='train', 
-    #                        Ts=config.T, 
-    #                        scale=config.scale_trajs, 
-    #                        cutoff=config.cutoff)
-    # print(len(dataset)) 
-    # dataloader = DataLoader(dataset, batch_size=5, shuffle=True)
-    # print(next(iter(dataloader)))
-    # batch = next(iter(dataloader))
-    # print(batch.x0)
-    # print(batch.T)
-    dataset = SamplerDataset(
-        traj_filename=config.mdqm9_traj_filename, 
-        sdf_filename="mdqm9.sdf", 
-        traj_path="molecular_interpolants/replica_exchange_trajs/rotated_replica_exchange_trajs/", 
-        sdf_path="molecular_interpolants/replica_exchange_trajs/", 
-        split='test', 
-        Ts=config.T_sampler, 
-        n_samples=config.n_samples,
-        scale=config.scale_trajs, 
-        cutoff=config.cutoff,
-        align=config.align,
-    )
-    
-    test_loader = DataLoader(
-        dataset=dataset,
-        batch_size=config.batch_size,
-        shuffle=True,
-        drop_last=True,
-        generator=torch.Generator().manual_seed(config.seed),
-    )
-    print(next(iter(test_loader)))
