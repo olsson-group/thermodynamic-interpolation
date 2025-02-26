@@ -3,7 +3,10 @@ import numpy as np
 import copy
 from rdkit import Chem
 
-#from utils.local_geometry import compute_terminals
+"""
+Adapted from: 
+https://github.com/olsson-group/sma-md/tree/main/utils
+"""
 
 def dfs(neighbors, node=0, visited=None):
     '''

@@ -1,8 +1,6 @@
-import os
 import sys
-sys.path.append('../thermointerpolants')
+sys.path.append('../thermodynamic-interpolants')
 
-import pandas as pd
 import numpy as np
 import scipy.stats as stats
 

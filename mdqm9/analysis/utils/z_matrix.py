@@ -1,6 +1,11 @@
-from paper.mdqm9.analyze.utils.mol_geometry import compute_torsion, compute_angle, compute_distance, ic_to_xyz, ic_to_xyz_test
+from mdqm9.analysis.utils.mol_geometry import compute_torsion, compute_angle, compute_distance, ic_to_xyz, ic_to_xyz_test
 import torch
 import numpy as np
+
+"""
+Adapted from: 
+https://github.com/olsson-group/sma-md/tree/main/utils
+"""
 
 
 def construct_z_matrix(X, ref_atoms, placing_order=None):

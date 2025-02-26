@@ -1,9 +1,9 @@
 import os
 import sys
-sys.path.append('../thermointerpolants')
+sys.path.append('../thermodynamic-interpolants')
 
 import numpy as np
-from mdqm9.analyze.utils import ess, sensititvity
+from mdqm9.analysis.utils import sensititvity
 
 
 def calc_phis_tfep(E0s: np.array, E1s: np.array, neg_dlogps_ti: np.array, k=None):

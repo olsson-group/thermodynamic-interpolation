@@ -3,6 +3,12 @@ import numpy as np
 
 torch.pi = torch.tensor(np.pi)
 
+"""
+Adapted from: 
+https://github.com/olsson-group/sma-md/tree/main/utils
+"""
+
+
 def torchdot(x1, x2, dim = -1):
     '''
     Computes dot product of the rows (dim = 1) or columns (dim = 0) vectors of x1 and x2.
