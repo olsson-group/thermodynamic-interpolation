@@ -15,7 +15,7 @@ cd thermodynamic-interpolants
 ```
 
 ### Installing dependencies
-We have provided two installation files to reproduce our Conda environments. To install an environments for general use throughout this repository, run the following
+We have provided two installation files to reproduce our Conda environments. To install an environment for general use throughout this repository, run the following
 ```
 conda env create -f ti_env.yml
 ```
@@ -38,7 +38,15 @@ The folder "mdqm9/" contains code for experiments related to the molecular data.
 ## Citations
 To cite this work, please use the following
 ```
-TBD...
+@misc{moqvist2024thermodynamicinterpolationgenerativeapproach,
+      title={Thermodynamic Interpolation: A generative approach to molecular thermodynamics and kinetics}, 
+      author={Selma Moqvist and Weilong Chen and Mathias Schreiner and Feliks Nüske and Simon Olsson},
+      year={2024},
+      eprint={2411.10075},
+      archivePrefix={arXiv},
+      primaryClass={physics.chem-ph},
+      url={https://arxiv.org/abs/2411.10075}, 
+}
 ```
 
 
