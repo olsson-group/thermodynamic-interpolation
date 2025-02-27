@@ -26,7 +26,7 @@ conda env create -f ti_energy_env.yml
 ```
 
 ## General Usage
-This repository contains experiments for both the lower-dimesnional double well system and molecular data. Our training data can be found [here](https://drive.google.com/file/d/1PfJcwlIJ5VKoIt4oCIxKe9yTxgOTSm23/view?usp=sharing).
+This repository contains experiments for both the lower-dimesnional double well system and molecular data. Our model weights for the molecular systems can be found [here](). Since the training and evaluation data files are too large to upload, please contact the authors for access. 
 
 ### Asymmetric double well
 The folder "adw/" contains code for experiments related to the Asymmetric Double Well potential. 
@@ -38,14 +38,16 @@ The folder "mdqm9/" contains code for experiments related to the molecular data.
 ## Citations
 To cite this work, please use the following
 ```
-@misc{moqvist2024thermodynamicinterpolationgenerativeapproach,
-      title={Thermodynamic Interpolation: A generative approach to molecular thermodynamics and kinetics}, 
-      author={Selma Moqvist and Weilong Chen and Mathias Schreiner and Feliks Nüske and Simon Olsson},
-      year={2024},
-      eprint={2411.10075},
-      archivePrefix={arXiv},
-      primaryClass={physics.chem-ph},
-      url={https://arxiv.org/abs/2411.10075}, 
+@article{Moqvist2025,
+  title = {Thermodynamic Interpolation: A Generative Approach to Molecular Thermodynamics and Kinetics},
+  ISSN = {1549-9626},
+  url = {http://dx.doi.org/10.1021/acs.jctc.4c01557},
+  DOI = {10.1021/acs.jctc.4c01557},
+  journal = {Journal of Chemical Theory and Computation},
+  publisher = {American Chemical Society (ACS)},
+  author = {Moqvist,  Selma and Chen,  Weilong and Schreiner,  Mathias and N\"{u}ske,  Feliks and Olsson,  Simon},
+  year = {2025},
+  month = feb 
 }
 ```
 
