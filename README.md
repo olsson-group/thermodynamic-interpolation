@@ -26,7 +26,7 @@ conda env create -f ti_energy_env.yml
 ```
 
 ## General Usage
-This repository contains experiments for both the lower-dimesnional double well system and molecular data. Our model weights for the molecular systems can be found [here](). Since the training and evaluation data files are too large to upload, please contact the authors for access. 
+This repository contains experiments for both the lower-dimesnional double well system and molecular data. Our model weights for the molecular systems can be found [here](https://zenodo.org/records/14958780). Since the training and evaluation data files are too large to upload, please contact the authors for access. 
 
 ### Asymmetric double well
 The folder "adw/" contains code for experiments related to the Asymmetric Double Well potential. 
